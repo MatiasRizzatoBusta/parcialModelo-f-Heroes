@@ -3,7 +3,6 @@ import Text.Show.Functions
 laVerdad = True
 
 --------------------------------------------- Punto 1 ---------------------------------------------
-
 data Heroe = UnHeroe{
     epiteto :: String,
     reconocimiento :: Int,
@@ -101,3 +100,12 @@ presumir :: Heroe->Heroe->(Ganador,Perdedor)
 presumir h1 h2 |(reconocimiento h1) > (reconocimiento h2) = (h1,h2)
                |(sumatoriaRareza h1) > (sumatoriaRareza h2) && (reconocimiento h1) == (reconocimiento h2)= (h1,h2)
                |otherwise = presumir.hacerLaTareaDelOtro (tareasRealizadas h2) h1
+
+
+--------------------------------------------- Punto 8 ---------------------------------------------
+{-
+Si dos heroes del mismo reconocimiento,sin objetos y sin ninguna tarea realizada van a estar presumiendo infinitamente porque 
+la funcion nunca terminaria de compararlos porque va a entrar por la funcion en donde ambos tienen el mismo reconocimiento y va a 
+evaluar los artefactos.Al no tener artefactos va a hacer que hagan las tareas del otro,pero como son vacias ningun heroe cambiaria
+y por lo tanto la funcion nunca podria encontrar a un ganador
+-}
