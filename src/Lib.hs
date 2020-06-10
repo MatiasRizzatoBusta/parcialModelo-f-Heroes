@@ -97,9 +97,13 @@ type Ganador = Heroe
 type Perdedor = Heroe
 presumir :: Heroe->Heroe->(Ganador,Perdedor)
 presumir h1 h2 |(reconocimiento h1) > (reconocimiento h2) = (h1,h2)
+               |(reconocimiento h1) < (reconocimiento h2) = (h2,h1)
                |(sumatoriaRareza h1) > (sumatoriaRareza h2) && (reconocimiento h1) == (reconocimiento h2)= (h1,h2)
-               |otherwise = presumir.hacerLaTareaDelOtro (tareasRealizadas h2) h1
+               |(sumatoriaRareza h1) < (sumatoriaRareza h2) && (reconocimiento h1) == (reconocimiento h2)= (h2,h1)
+               |otherwise = presumir (foldr ($) h1 (tareasRealizadas h2)) (foldr ($) h2 (tareasRealizadas h1))
 
+sumatoriaRareza :: Heroe->Int
+sumatoriaRareza = sum.map rareza.artefactos
 
 --------------------------------------------- Punto 8 ---------------------------------------------
 {-
