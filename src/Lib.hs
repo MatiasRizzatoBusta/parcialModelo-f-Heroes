@@ -8,7 +8,7 @@ data Heroe = UnHeroe{
     epiteto :: String,
     reconocimiento :: Int,
     artefactos :: [Artefacto],
-    tareasRealizadas :: [String]
+    tareasRealizadas :: [Tarea]
 }deriving (Show)
 
 data Artefacto = UnArtefacto{
@@ -35,16 +35,16 @@ relampagoDeZeus = UnArtefacto 500
 type Tarea = Heroe->Heroe
 
 encontrarArtefacto :: Artefacto->Tarea
-encontrarArtefacto artefacto heroe = heroe{reconocimiento = sumoReconocimiento (rareza artefacto) heroe,artefactos = agregoArtefacto artefacto (artefactos heroe),tareasRealizadas = agregoTarea "encontrarArtefacto" heroe}
+encontrarArtefacto artefacto heroe = heroe{reconocimiento = sumoReconocimiento (rareza artefacto) heroe,artefactos = agregoArtefacto artefacto (artefactos heroe),tareasRealizadas = agregoTarea (encontrarArtefacto artefacto) heroe}
 
 sumoReconocimiento :: Int->Heroe->Int
 sumoReconocimiento rarezaArtefacto heroe = rarezaArtefacto + (reconocimiento heroe)
 
-agregoTarea :: String->Heroe->[String]
+agregoTarea :: Tarea->Heroe->[Tarea]
 agregoTarea tarea heroe = tarea:(tareasRealizadas heroe)
 
 escalarOlimpo :: Tarea
-escalarOlimpo heroe = heroe{reconocimiento = sumoReconocimiento 500 heroe,artefactos = (agregoArtefacto relampagoDeZeus.triplicoRareza) heroe,tareasRealizadas = agregoTarea "escalar Olimpo" heroe}
+escalarOlimpo heroe = heroe{reconocimiento = sumoReconocimiento 500 heroe,artefactos = (agregoArtefacto relampagoDeZeus.triplicoRareza) heroe,tareasRealizadas = agregoTarea (escalarOlimpo) heroe}
 
 triplicoRareza :: Heroe->[Artefacto]
 triplicoRareza heroe = map tomoRareza (artefactos heroe)
@@ -69,7 +69,7 @@ data Bestia = UnaBestia{
 type AprovechaDebilidad = Heroe->Bool
 
 matarBestia :: Bestia->Tarea
-matarBestia bestia heroe |explotaDebilidad (debilidad bestia) heroe = heroe{epiteto= tituloDeAsesino (nombre bestia),tareasRealizadas = agregoTarea "matar Bestia" heroe}
+matarBestia bestia heroe |explotaDebilidad (debilidad bestia) heroe = heroe{epiteto= tituloDeAsesino (nombre bestia),tareasRealizadas = agregoTarea (matarBestia bestia) heroe}
                          |otherwise =heroe{epiteto="el cobarde",artefactos = tail (artefactos heroe)}
 
 explotaDebilidad :: AprovechaDebilidad->Heroe->Bool
@@ -81,7 +81,7 @@ tituloDeAsesino :: String->String
 tituloDeAsesino nombreBestia = "el asesino de " ++ nombreBestia
 
 --------------------------------------------- Punto 4 ---------------------------------------------
-heracles = UnHeroe "Guardian del Olimpo" 700 [pistola,relampagoDeZeus] ["matar al león de Nemea"] 
+heracles = UnHeroe "Guardian del Olimpo" 700 [pistola,relampagoDeZeus] [matarLeonDeNamea] 
 
 pistola = UnArtefacto 1000
 
@@ -90,3 +90,14 @@ leonDeNamea = UnaBestia "Leon de Namea" ((>=20).length.epiteto)
 
 matarLeonDeNamea :: Tarea
 matarLeonDeNamea  = matarBestia leonDeNamea
+
+--------------------------------------------- Punto 6 ---------------------------------------------
+realizarTarea ::Tarea->Heroe->Heroe
+realizarTarea tarea heroe = tarea heroe
+--------------------------------------------- Punto 7 ---------------------------------------------
+type Ganador = Heroe
+type Perdedor = Heroe
+presumir :: Heroe->Heroe->(Ganador,Perdedor)
+presumir h1 h2 |(reconocimiento h1) > (reconocimiento h2) = (h1,h2)
+               |(sumatoriaRareza h1) > (sumatoriaRareza h2) && (reconocimiento h1) == (reconocimiento h2)= (h1,h2)
+               |otherwise = presumir.hacerLaTareaDelOtro (tareasRealizadas h2) h1
