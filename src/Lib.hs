@@ -20,12 +20,12 @@ pasarALaHistoria heroe |(cumpleCondicion (>1000).reconocimiento ) heroe = heroe{
                        |(cumpleCondicion (<500).reconocimiento) heroe = heroe{epiteto = "el magnifico",artefactos = agregoArtefacto lanzaDelOlimpo (artefactos heroe)}
                        |(cumpleCondicion (>100).reconocimiento) heroe = heroe{epiteto = "hoplita",artefactos=xiphos:(artefactos heroe)}
                        |otherwise = heroe
-
+--puedo usar guardas pq tengo contemplados los 4 casos posibles
 cumpleCondicion :: (Int->Bool)->Int->Bool
 cumpleCondicion condicion reconocimiento = condicion reconocimiento
 
 agregoArtefacto :: Artefacto->[Artefacto]->[Artefacto]
-agregoArtefacto artefacto artefactosHeroe= artefacto:artefactosHeroe
+agregoArtefacto artefacto artefactosHeroe= artefacto:artefactosHeroe --agrego estas dos funciones para evitar repetir logica
 
 lanzaDelOlimpo = UnArtefacto 100
 xiphos = UnArtefacto 50
@@ -50,15 +50,14 @@ triplicoRareza heroe = map tomoRareza (artefactos heroe)
 
 tomoRareza :: Artefacto->Artefacto
 tomoRareza artefacto = artefacto{rareza = (*3) (rareza artefacto)}
-{-
+
 ayudarACruzarLaCalle :: Int->Tarea
-ayudarACruzarLaCalle cuadrazCrusadas heroe = heroe{epiteto = queTanGroso cuadrazCrusadas,tareasRealizadas = agregoTarea "ayudar a cruzar la calle" heroe }
+ayudarACruzarLaCalle cuadrasCrusadas heroe = heroe{epiteto = queTanGroso cuadrasCrusadas,tareasRealizadas = agregoTarea (ayudarACruzarLaCalle cuadrasCrusadas) heroe }
 
 queTanGroso :: Int->String
-queTanGroso cuadrazCrusadas |cuadrazCrusadas >1=  queTanGroso (cuadrazCrusadas -1) :("gros" ++ "o")
+queTanGroso cuadrasCrusadas |cuadrasCrusadas >1=  "gros " ++ replicate cuadrasCrusadas 'o'
                             |otherwise = "groso"
 
--}
 
 data Bestia = UnaBestia{
     nombre :: String,
@@ -112,7 +111,6 @@ y por lo tanto la funcion nunca podria encontrar a un ganador
 --------------------------------------------- Punto 9 ---------------------------------------------
 realizarLabor :: Heroe->[Tarea]->Heroe
 realizarLabor heroe listaTareas = foldr ($) heroe listaTareas
-
 --------------------------------------------- Punto 10 ---------------------------------------------
 {-
 Si esta funcion es invocada con una lista infinita nunca sabremos el estado final del heroe ya que este nunca pararia de realiar 
