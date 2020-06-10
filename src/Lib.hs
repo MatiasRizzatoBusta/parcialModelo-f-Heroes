@@ -113,3 +113,8 @@ y por lo tanto la funcion nunca podria encontrar a un ganador
 realizarLabor :: Heroe->[Tarea]->Heroe
 realizarLabor heroe listaTareas = foldr ($) heroe listaTareas
 
+--------------------------------------------- Punto 10 ---------------------------------------------
+{-
+Si esta funcion es invocada con una lista infinita nunca sabremos el estado final del heroe ya que este nunca pararia de realiar 
+tareas
+-}
