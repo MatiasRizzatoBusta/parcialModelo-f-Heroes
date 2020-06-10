@@ -109,3 +109,7 @@ la funcion nunca terminaria de compararlos porque va a entrar por la funcion en 
 evaluar los artefactos.Al no tener artefactos va a hacer que hagan las tareas del otro,pero como son vacias ningun heroe cambiaria
 y por lo tanto la funcion nunca podria encontrar a un ganador
 -}
+--------------------------------------------- Punto 9 ---------------------------------------------
+realizarLabor :: Heroe->[Tarea]->Heroe
+realizarLabor heroe listaTareas = foldr ($) heroe listaTareas
+
