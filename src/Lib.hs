@@ -79,3 +79,9 @@ explotaDebilidad debilidadBestia heroe = debilidadBestia heroe --la debilidad es
 
 tituloDeAsesino :: String->String
 tituloDeAsesino nombreBestia = "el asesino de " ++ nombreBestia
+
+--------------------------------------------- Punto 4 ---------------------------------------------
+heracles = UnHeroe "Guardian del Olimpo" 700 [pistola,relampagoDeZeus] ["escalarOlimpo"] --le pongo esta pq tiene el relampagoDeZeus
+
+pistola = UnArtefacto 1000
+
