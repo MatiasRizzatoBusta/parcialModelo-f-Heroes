@@ -55,8 +55,8 @@ ayudarACruzarLaCalle :: Int->Tarea
 ayudarACruzarLaCalle cuadrasCrusadas heroe = heroe{epiteto = queTanGroso cuadrasCrusadas,tareasRealizadas = agregoTarea (ayudarACruzarLaCalle cuadrasCrusadas) heroe }
 
 queTanGroso :: Int->String
-queTanGroso cuadrasCrusadas |cuadrasCrusadas >1=  "gros " ++ replicate cuadrasCrusadas 'o'
-                            |otherwise = "groso"
+queTanGroso cuadrasCrusadas |cuadrasCrusadas >1=  "gros " ++ replicate cuadrasCrusadas 'o' --le hago char pq con replicate 
+                            |otherwise = "groso"                                         --lo hago string y ahi concateno
 
 
 data Bestia = UnaBestia{
