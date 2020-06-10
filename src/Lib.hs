@@ -18,24 +18,24 @@ data Artefacto = UnArtefacto{
 --------------------------------------------- Punto 2 ---------------------------------------------
 pasarALaHistoria :: Heroe->Heroe
 pasarALaHistoria heroe |(cumpleCondicion (>1000).reconocimiento ) heroe = heroe{epiteto = "el mitico"}
-                       |(cumpleCondicion (<500).reconocimiento) heroe = heroe{epiteto = "el magnifico",artefactos = agregoArtefacto lanzaDelOlimpo heroe}
+                       |(cumpleCondicion (<500).reconocimiento) heroe = heroe{epiteto = "el magnifico",artefactos = agregoArtefacto lanzaDelOlimpo (artefactos heroe)}
                        |(cumpleCondicion (>100).reconocimiento) heroe = heroe{epiteto = "hoplita",artefactos=xiphos:(artefactos heroe)}
                        |otherwise = heroe
 
 cumpleCondicion :: (Int->Bool)->Int->Bool
 cumpleCondicion condicion reconocimiento = condicion reconocimiento
 
-agregoArtefacto :: Artefacto->Heroe->[Artefacto]
-agregoArtefacto artefacto heroe = artefacto:(artefactos heroe)
+agregoArtefacto :: Artefacto->[Artefacto]->[Artefacto]
+agregoArtefacto artefacto artefactosHeroe= artefacto:artefactosHeroe
 
 lanzaDelOlimpo = UnArtefacto 100
 xiphos = UnArtefacto 50
-
+relampagoDeZeus = UnArtefacto 500
 --------------------------------------------- Punto 3 ---------------------------------------------
 type Tarea = Heroe->Heroe
 
 encontrarArtefacto :: Artefacto->Tarea
-encontrarArtefacto artefacto heroe = heroe{reconocimiento = sumoReconocimiento (rareza artefacto) heroe,artefactos = agregoArtefacto artefacto heroe,tareasRealizadas = agregoTarea "encontrarArtefacto" heroe}
+encontrarArtefacto artefacto heroe = heroe{reconocimiento = sumoReconocimiento (rareza artefacto) heroe,artefactos = agregoArtefacto artefacto (artefactos heroe),tareasRealizadas = agregoTarea "encontrarArtefacto" heroe}
 
 sumoReconocimiento :: Int->Heroe->Int
 sumoReconocimiento rarezaArtefacto heroe = rarezaArtefacto + (reconocimiento heroe)
@@ -43,9 +43,13 @@ sumoReconocimiento rarezaArtefacto heroe = rarezaArtefacto + (reconocimiento her
 agregoTarea :: String->Heroe->[String]
 agregoTarea tarea heroe = tarea:(tareasRealizadas heroe)
 
+escalarOlimpo :: Tarea
+escalarOlimpo heroe = heroe{reconocimiento = sumoReconocimiento 500 heroe,artefactos = (agregoArtefacto relampagoDeZeus.triplicoRareza) heroe,tareasRealizadas = agregoTarea "escalar Olimpo" heroe}
 
+triplicoRareza :: Heroe->[Artefacto]
+triplicoRareza heroe = map tomoRareza (artefactos heroe)
 
-
-
+tomoRareza :: Artefacto->Artefacto
+tomoRareza artefacto = artefacto{rareza = (*3) (rareza artefacto)}
 
 
