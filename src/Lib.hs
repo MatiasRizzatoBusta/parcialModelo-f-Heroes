@@ -81,7 +81,12 @@ tituloDeAsesino :: String->String
 tituloDeAsesino nombreBestia = "el asesino de " ++ nombreBestia
 
 --------------------------------------------- Punto 4 ---------------------------------------------
-heracles = UnHeroe "Guardian del Olimpo" 700 [pistola,relampagoDeZeus] ["escalarOlimpo"] --le pongo esta pq tiene el relampagoDeZeus
+heracles = UnHeroe "Guardian del Olimpo" 700 [pistola,relampagoDeZeus] ["matar al león de Nemea"] 
 
 pistola = UnArtefacto 1000
 
+--------------------------------------------- Punto 5 ---------------------------------------------
+leonDeNamea = UnaBestia "Leon de Namea" ((>=20).length.epiteto)
+
+matarLeonDeNamea :: Tarea
+matarLeonDeNamea  = matarBestia leonDeNamea
