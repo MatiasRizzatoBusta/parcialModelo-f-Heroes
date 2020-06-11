@@ -58,7 +58,6 @@ queTanGroso :: Int->String
 queTanGroso cuadrasCrusadas |cuadrasCrusadas >1=  "gros " ++ replicate cuadrasCrusadas 'o' --le hago char pq con replicate 
                             |otherwise = "groso"                                         --lo hago string y ahi concateno
 
-
 data Bestia = UnaBestia{
     nombre :: String,
     debilidad :: AprovechaDebilidad
@@ -74,21 +73,17 @@ explotaDebilidad :: AprovechaDebilidad->Heroe->Bool
 explotaDebilidad debilidadBestia heroe = debilidadBestia heroe --la debilidad es una funcion que toma al heroe pq esta puede ser
 --cualquier cosa que tenga el heroe y como no se que puede ser, hago que el bicho lo sepa y lo tenga codeado el 
 
-
 tituloDeAsesino :: String->String
 tituloDeAsesino nombreBestia = "el asesino de " ++ nombreBestia
-
 --------------------------------------------- Punto 4 ---------------------------------------------
 heracles = UnHeroe "Guardian del Olimpo" 700 [pistola,relampagoDeZeus] [matarLeonDeNamea] 
 
 pistola = UnArtefacto 1000
-
 --------------------------------------------- Punto 5 ---------------------------------------------
 leonDeNamea = UnaBestia "Leon de Namea" ((>=20).length.epiteto)
 
 matarLeonDeNamea :: Tarea
 matarLeonDeNamea  = matarBestia leonDeNamea
-
 --------------------------------------------- Punto 6 ---------------------------------------------
 realizarTarea ::Tarea->Heroe->Heroe
 realizarTarea tarea heroe = tarea heroe
@@ -104,7 +99,6 @@ presumir h1 h2 |(reconocimiento h1) > (reconocimiento h2) = (h1,h2)
 
 sumatoriaRareza :: Heroe->Int
 sumatoriaRareza = sum.map rareza.artefactos
-
 --------------------------------------------- Punto 8 ---------------------------------------------
 {-
 Si dos heroes del mismo reconocimiento,sin objetos y sin ninguna tarea realizada van a estar presumiendo infinitamente porque 
