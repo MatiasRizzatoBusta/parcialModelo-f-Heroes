@@ -96,6 +96,7 @@ presumir h1 h2 |(reconocimiento h1) > (reconocimiento h2) = (h1,h2)
                |(sumatoriaRareza h1) > (sumatoriaRareza h2)= (h1,h2)
                |(sumatoriaRareza h1) < (sumatoriaRareza h2)= (h2,h1)
                |otherwise = presumir (realizarLabor h1 (tareasRealizadas h2)) (realizarLabor h2 (tareasRealizadas h1))
+-- si no entra por ninguna cada heroe hace las tareas del otro y vuelven a compararse
 
 sumatoriaRareza :: Heroe->Int
 sumatoriaRareza = sum.map rareza.artefactos
